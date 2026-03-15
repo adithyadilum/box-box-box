@@ -1,1 +1,1 @@
-node solution/simulator.js
+python3 solution/simulator.py
