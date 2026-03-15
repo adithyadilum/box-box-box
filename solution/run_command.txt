@@ -1,1 +1,1 @@
-python3 solution/simulator.py
+python solution/simulator.py
