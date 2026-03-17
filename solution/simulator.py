@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Box Box Box - F1 Race Simulator
+(33/100 Champion Engine)
 """
 
 import json
@@ -10,9 +11,9 @@ def simulate_race(input_data):
     results = []
     config = input_data['race_config']
     
-    # Evolved Universal Temperature Scaler
+    # 33/100 Champion Temperature Scaler
     track_temp = float(config['track_temp'])
-    tempFactor = (track_temp / 195.19982241364053) ** 1.85803
+    tempFactor = (track_temp / 145.57217653676338) ** 2.3846725808446343
     
     for str_key, strategy in input_data['strategies'].items():
         total_time = 0.0
@@ -28,35 +29,35 @@ def simulate_race(input_data):
             tire_age += 1
             base = float(config['base_lap_time'])
             
-            compoundAdd = 0.0  # This is now a PERCENTAGE!
+            compoundAdd = 0.0
             gracePeriod = 0.0
             wearLinear = 0.0
             wearQuadratic = 0.0
             
-            # THE LATEST POLYNOMIAL + MULTIPLIER DNA
+            # The 33/100 Champion DNA
             if current_tire == 'SOFT':
                 compoundAdd = 0.0
-                gracePeriod = 8.944250980563016
-                wearLinear = 0.07143470925441658
-                wearQuadratic = 0.12146750025029442
+                gracePeriod = 8.92698525700048
+                wearLinear = 0.17111513971955752
+                wearQuadratic = 0.12366035569289399
             elif current_tire == 'MEDIUM':
-                compoundAdd = 0.014202672972904534
-                gracePeriod = 18.102404866180787
-                wearLinear = 0.002092489443579544
-                wearQuadratic = 0.04252039815779273
+                compoundAdd = 1.1719509363738352
+                gracePeriod = 18.195156951975505
+                wearLinear = 0.06750903373952638
+                wearQuadratic = 0.04352138162428953
             elif current_tire == 'HARD':
-                compoundAdd = 0.02542095642096224
-                gracePeriod = 26.2783026670605
-                wearLinear = 0.002015721941460836
-                wearQuadratic = 0.012780224103650196
+                compoundAdd = 2.086720156660097
+                gracePeriod = 25.012882642639532
+                wearLinear = 0.0009006787488045157
+                wearQuadratic = 0.010975290133349625
             
             active = max(0.0, float(tire_age) - gracePeriod)
             
-            # True Polynomial Degradation
+            # Pure Polynomial Degradation: ax + bx^2
             degradationEffect = base * tempFactor * (wearLinear * active + wearQuadratic * active * active)
             
-            # The Multiplier Fix: base + (base * percentage)
-            total_time += base + (base * compoundAdd) + degradationEffect
+            # Pure Flat Addition
+            total_time += base + compoundAdd + degradationEffect
             
             if lap in pit_stops_map:
                 current_tire = pit_stops_map[lap]
